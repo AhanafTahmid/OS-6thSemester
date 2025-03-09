@@ -1,1 +1,1 @@
-Reposity of Lab Tasks of Operating System Course
+Repository of Lab Tasks of Operating System Course
