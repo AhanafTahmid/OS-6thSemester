@@ -21,9 +21,10 @@ void solve(){
     map<int, int>mp, mp2;//how many time appear, how many remain  
     for(int i = 0; i < n; i++){
         int x, y; cin >> x >> y;
-        v.push_back({x, y, i+1}); // arrival, burst, process
+        v.push_back({x, y, i+1}); // arrival, burst, id
         mp[i+1]=y;
     }
+
     sort(v.begin(), v.end());
     int st = 0, end = 0;
     //total time
@@ -34,7 +35,7 @@ void solve(){
 
 //     page 3
 
-23
+// 23
 
 // P4 0 1
 // P4 1 2
@@ -70,6 +71,7 @@ void solve(){
             if( ind<v.size() && v[ind][0]<=i && mp[v[ind][2]]>0 ) na.push_back({v[ind][1], v[ind][0], v[ind][2]}),ind++;
             else break;
         }
+        
         //Burst Time, Arrival Time, ID
         sort(na.begin(), na.end());
         if( na.size() >= 1){
