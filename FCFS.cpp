@@ -41,7 +41,7 @@ void solve(){
         current_time += burst;
     }
 
-    for(auto x: a){
+    for(array<int,3> x: a){
         cout << "P" << x[0] << " " << x[1] << " " << x[2] << endl;
     }
 

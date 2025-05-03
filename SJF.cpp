@@ -26,6 +26,7 @@ void solve(){
     }
 
     sort(v.begin(), v.end());
+    for(auto x: v) cout<< x[0] << " " << x[1] << " " << x[2] << endl;
     int st = 0, end = 0;
     //total time
     for(int i=0;i<n;i++) end+= v[i][1];
