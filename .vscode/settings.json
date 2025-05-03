@@ -28,6 +28,7 @@
         "ranges": "cpp",
         "stacktrace": "cpp",
         "text_encoding": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "random": "cpp"
     }
 }

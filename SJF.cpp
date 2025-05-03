@@ -71,7 +71,7 @@ void solve(){
             if( ind<v.size() && v[ind][0]<=i && mp[v[ind][2]]>0 ) na.push_back({v[ind][1], v[ind][0], v[ind][2]}),ind++;
             else break;
         }
-        
+
         //Burst Time, Arrival Time, ID
         sort(na.begin(), na.end());
         if( na.size() >= 1){
@@ -84,6 +84,7 @@ void solve(){
                 v.erase(it);
             }
             a.push_back({na[0][2], i, mp2[na[0][2]]});//id, time, total burst
+            
         }
         else {
             a.push_back({-1, i, 1});//id, end,time

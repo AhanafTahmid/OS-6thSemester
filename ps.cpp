@@ -60,6 +60,8 @@ void solve(){
             }
             a.push_back({na[0][3], i, mp2[v[0][3]], na[0][0]});//id, time, end, priority
         }
+        else a.push_back({-1, i, 1 -1});
+
 
         //if(na.size()>=1)cout<< na[0][3];
         // for(auto x: na) cout<< x[0] << " " << x[1] << " " << x[2] << " " << x[3] << endl;
