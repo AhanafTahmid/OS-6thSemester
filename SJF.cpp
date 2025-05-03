@@ -62,7 +62,6 @@ void solve(){
 // P3 21 7
 // P3 22 8
 
-
     vector<array<int,3>> a;
 
     for(int i=0;i<end;i++){
