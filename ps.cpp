@@ -4,6 +4,13 @@ using namespace std;
 #define endl '\n'
 #define int long long
 
+// 5
+// 2 0 4
+// 3 1 3
+// 4 2 1
+// 5 3 5
+// 5 4 2
+
 void solve(){
     vector<array<int,4>> v;
     map<int, int>mp,mp2;

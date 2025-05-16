@@ -2,10 +2,10 @@
 
 //input
 // 5
-// 6 2
-// 2 5
-// 8 1
-// 3 0
+// 2 6 
+// 5 2
+// 1 8
+// 0 3
 // 4 4
 
 #include <bits/stdc++.h>
@@ -68,7 +68,7 @@ void solve(){
         int ind = 0;
         vector<array<int,3>> na;
         while(1){
-            if( ind<v.size() && v[ind][0]<=i && mp[v[ind][2]]>0 ) na.push_back({mp[v[ind][2]], v[ind][0], v[ind][2]}),ind++;
+            if( ind<v.size() && v[ind][0]<=i && mp[v[ind][2]]>0 ) na.push_back({v[ind][1], v[ind][0], v[ind][2]}),ind++;
             else break;
         }
 
