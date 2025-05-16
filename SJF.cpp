@@ -68,7 +68,7 @@ void solve(){
         int ind = 0;
         vector<array<int,3>> na;
         while(1){
-            if( ind<v.size() && v[ind][0]<=i && mp[v[ind][2]]>0 ) na.push_back({v[ind][1], v[ind][0], v[ind][2]}),ind++;
+            if( ind<v.size() && v[ind][0]<=i && mp[v[ind][2]]>0 ) na.push_back({mp[v[ind][2]], v[ind][0], v[ind][2]}),ind++;
             else break;
         }
 
