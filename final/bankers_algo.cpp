@@ -1,6 +1,6 @@
 //Bankers Algorithm
 //https://youtu.be/7gMLNiEz3nw
-// input: 
+// input:
 // 5 3
 // 10 5 7
 
@@ -11,9 +11,9 @@
 // 0 0 2
 
 // 7 5 3
-// 3 2 2 
+// 3 2 2
 // 9 0 2
-// 4 2 2 
+// 4 2 2
 // 5 3 3
 
 #include <bits/stdc++.h>
@@ -26,7 +26,7 @@ void solve(){
     vector<vector<int>>allocation(p, vector<int>(r)), max_need(p, vector<int>(r)), available(p+1, vector<int>(r))
     , rem_need(p, vector<int>(r));
     vector<int>given_resources(r);
-    
+
     for(int i=0;i<r;i++){
         cin>>given_resources[i];
     }
@@ -57,47 +57,37 @@ void solve(){
 
     for(int i=0;i<r;i++) available[0][i] = given_resources[i] - sum[i];
 
-    
     int ind = 0;
     bool ok = 0;
+
+    int cnt = 0,inf = 100;
     while(1){
         ok = 0;
         for(int i=0;i<p;i++){
             for(int j=0;j<r;j++){
+                inf--;
                 if(rem_need[i][j]!=-1){
-                    bool ok2 = 0;
-                    for(int k=0;k<r;k++){
-                        if( rem_need[i][j] > available[ind][k] ){
-                            break;
-                        }
-                        if(k==r-1){
-                            ok2 = 1;
-                        }
-                    }
 
-                    if(ok2){
-                        ind++;
+                    if( rem_need[i][j] > available[ind][j] ){
+                        break;
+                    }
+                    if(j == r-1){
+                         cnt++;
                         for(int k=0;k<r;k++) available[ind+1][k] = available[ind][k] + allocation[i][k], rem_need[i][k] = -1;
-                        ok = 1;
+                        ind++;
                     }
                 }
             }
         }
 
-        // if(!ok){
-        //     for(int i=0;i<p;i++){
-        //         for(int j=0;j<r;j++){
-        //             if(rem_need[i][j]!=-1){
-        //                 ok = 1;
-        //             }
-        //         }
-        //     }
-        // }
-
-
-        if(!ok)break;
+        if(cnt==p){
+            ok = 1;
+            break;
+        }
+        if(inf==0)break;
     }
 
+    cout<<endl;
     for(int i=0;i<p;i++){
         for(int j=0;j<r;j++){
             cout<< rem_need[i][j]<<" ";
@@ -111,6 +101,6 @@ int32_t main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     int t=1;
     //cin >> t;
-    while(t--)solve(); 
+    while(t--)solve();
     return 0;
 }
