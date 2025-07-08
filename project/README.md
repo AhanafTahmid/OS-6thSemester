@@ -1,5 +1,5 @@
 # Fifth Semester Project - Compiler
-Compiler Project - Fifth Semester
+OS Project - 6th Semester
 # Demo Video
 
 # To Run The Project

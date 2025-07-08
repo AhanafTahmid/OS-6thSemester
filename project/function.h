@@ -1365,11 +1365,419 @@ void lru_visualization(){
     }
 }
 
-void page_optimal_algorithm(){
 
+
+
+void page_optimal_algorithm(){
+    setbkcolor(DARKGRAY);
+    cleardevice();
+    
+    //footer
+    setfillstyle(SOLID_FILL, CYAN);
+    bar(16, 580, 783, 620);
+    settextstyle(GOTHIC_FONT, HORIZ_DIR, 1);
+    setbkcolor(CYAN);
+    setcolor(BLACK);
+    outtextxy(400 - textwidth("Developed By Spartan")/2, 600 - textheight("A") / 2, "Developed By Spartan");
+
+    // Header
+    settextstyle(8, 0, 3);
+    setcolor(WHITE);
+    outtextxy(400 - textwidth("Optimal Page Replacement Algorithm")/2, 30, "Optimal Page Replacement Algorithm");
+
+    // Draw separator line
+    setcolor(CYAN);
+    line(50, 70, 750, 70);
+
+    settextstyle(8, 0, 2);
+    new Field(50, 90, 350, 140, GREEN, WHITE, "Enter Frame Size");
+    new Field(50, 160, 350, 210, GREEN, WHITE, "Enter Page Count");
+    new Field(50, 230, 700, 280, GREEN, WHITE, "Enter Pages (space separated)");
+
+    Input frameInput, pageCountInput, pagesInput;
+    frameInput.Name(370, 90, 600, 140);
+    pageCountInput.Name(370, 160, 600, 210);
+    pagesInput.Name(50, 300, 700, 350);
+
+    Button submit(250, 370, 450, 420, BLUE, "Calculate Optimal");
+    Button back(50, 520, 200, 560, RED, "BACK");
+    Button clear(550, 520, 700, 560, RED, "CLEAR");
+
+    char frameStr[10] = "", pageCountStr[10] = "", pagesStr[500] = "";
+    bool showResult = false;
+    bool resultDisplayed = false;
+    int pageFaults = 0;
+
+    while(true) {
+        submit.hover(GREEN);
+        back.hover(LIGHTRED);
+        clear.hover(RED);
+
+        if(GetAsyncKeyState(VK_LBUTTON) & (0x8000 != 0)) {
+            if(frameInput.cursor()){
+                frameInput.getName(frameStr);
+                showResult = false;
+                resultDisplayed = false;
+            }
+            else if(pageCountInput.cursor()){
+                pageCountInput.getName(pageCountStr);
+                showResult = false;
+                resultDisplayed = false;
+            }
+            else if(pagesInput.cursor()){
+                pagesInput.getName(pagesStr);
+                showResult = false;
+                resultDisplayed = false;
+            }
+            else if(submit.cursor()) {
+                // Clear previous result first
+                setfillstyle(SOLID_FILL, DARKGRAY);
+                bar(150, 430, 600, 470);
+
+                // Validate inputs first
+                if(strlen(frameStr) == 0 || strlen(pageCountStr) == 0 || strlen(pagesStr) == 0) {
+                    setcolor(RED);
+                    settextstyle(8, 0, 2);
+                    outtextxy(200, 430, "Please fill all fields!");
+                    showResult = false;
+                    resultDisplayed = false;
+                    delay(1000);
+                    continue;
+                }
+
+                // Calculate Optimal
+                int frame = atoi(frameStr);
+                int pageCount = atoi(pageCountStr);
+
+                if(frame <= 0 || pageCount <= 0) {
+                    setcolor(RED);
+                    settextstyle(8, 0, 2);
+                    outtextxy(200, 430, "Invalid frame size or page count!");
+                    showResult = false;
+                    resultDisplayed = false;
+                    delay(1000);
+                    continue;
+                }
+
+                // Parse pages from string
+                istringstream iss(pagesStr);
+                string pageStr;
+                vector<int> pages;
+                while(iss >> pageStr) {
+                    pages.push_back(atoi(pageStr.c_str()));
+                }
+
+                // Optimal Page Replacement Algorithm
+                vector<int> frames; // current pages in frame
+                pageFaults = 0;
+
+                for (int i = 0; i < pages.size(); i++) {
+                    int page = pages[i];
+
+                    // If page NOT in frame => page fault
+                    if (find(frames.begin(), frames.end(), page) == frames.end()) {
+                        pageFaults++; // increment page fault
+
+                        // If frame has space, just add page
+                        if (frames.size() < frame) {
+                            frames.push_back(page);
+                            continue;
+                        }
+
+                        // Frame full => replace using optimal
+                        int index_to_replace = -1;
+                        int farthest = i + 1;
+
+                        for (int j = 0; j < frame; j++) {
+                            int k;
+                            for (k = i + 1; k < pages.size(); k++) {
+                                if (frames[j] == pages[k]) {
+                                    if (k > farthest) {
+                                        farthest = k;
+                                        index_to_replace = j;
+                                    }
+                                    break;
+                                }
+                            }
+                            // If page is never used again, replace immediately
+                            if (k == pages.size()) {
+                                index_to_replace = j;
+                                break;
+                            }
+                        }
+                        frames[index_to_replace] = page;
+                    }
+                }
+
+                showResult = true;
+                resultDisplayed = false;
+            }
+            else if(clear.cursor()) {
+                // Clear all inputs and result
+                strcpy(frameStr, "");
+                strcpy(pageCountStr, "");
+                strcpy(pagesStr, "");
+                showResult = false;
+                resultDisplayed = false;
+
+                // Clear input fields visually
+                setfillstyle(SOLID_FILL, WHITE);
+                bar(371, 91, 599, 139);
+                bar(371, 161, 599, 209);
+                bar(51, 301, 699, 349);
+
+                // Clear result area
+                setfillstyle(SOLID_FILL, DARKGRAY);
+                bar(150, 430, 600, 470);
+            }
+            else if(back.cursor()) {
+                menu();
+                break;
+            }
+        }
+
+        // Display result once when needed
+        if(showResult && !resultDisplayed) {
+            // Create result box
+            setfillstyle(SOLID_FILL, LIGHTBLUE);
+            bar(150, 430, 600, 470);
+            setcolor(BLACK);
+            rectangle(150, 430, 600, 470);
+
+            char result[100];
+            sprintf(result, "Total Page Faults: %d", pageFaults);
+            settextstyle(8, 0, 2);
+            setcolor(BLACK);
+            outtextxy(300, 445, result);
+
+            resultDisplayed = true;
+        }
+    }
 }
 
-
 void page_optimal_visualization(){
+    setbkcolor(DARKGRAY);
+    cleardevice();
+    
+    // Footer
+    setfillstyle(SOLID_FILL, CYAN);
+    bar(16, 680, 783, 720);
+    settextstyle(GOTHIC_FONT, HORIZ_DIR, 1);
+    setbkcolor(CYAN);
+    setcolor(BLACK);
+    outtextxy(400 - textwidth("Developed By Spartan")/2, 700 - textheight("A") / 2, "Developed By Spartan");
 
+    // Compact Header
+    settextstyle(8, 0, 2);
+    setcolor(WHITE);
+    outtextxy(400 - textwidth("Optimal Page Replacement Visualization")/2, 10, "Optimal Page Replacement Visualization");
+
+    // Compact input fields
+    settextstyle(8, 0, 1);
+    new Field(50, 30, 250, 55, GREEN, WHITE, "Frame Size");
+    new Field(300, 30, 700, 55, GREEN, WHITE, "Pages (space separated)");
+
+    Input frameInput, pagesInput;
+    frameInput.Name(50, 60, 150, 80);
+    pagesInput.Name(200, 60, 700, 80);
+
+    Button submit(250, 85, 350, 105, BLUE, "Visualize");
+    Button back(50, 650, 150, 675, RED, "BACK");
+
+    char frameStr[10] = "", pagesStr[500] = "";
+
+    while(true) {
+        submit.hover(GREEN);
+        back.hover(LIGHTRED);
+
+        if(GetAsyncKeyState(VK_LBUTTON) & (0x8000 != 0)) {
+            if(frameInput.cursor()){ frameInput.getName(frameStr); }
+            else if(pagesInput.cursor()){ pagesInput.getName(pagesStr); }
+            else if(submit.cursor()) {
+                // Start visualization
+                int frame = atoi(frameStr);
+                
+                // Parse pages
+                istringstream iss(pagesStr);
+                string pageStr;
+                vector<int> pages;
+                while(iss >> pageStr && pages.size() < 20) {
+                    pages.push_back(atoi(pageStr.c_str()));
+                }
+
+                if(frame <= 0 || pages.empty()) {
+                    setcolor(RED);
+                    settextstyle(8, 0, 1);
+                    outtextxy(200, 110, "Invalid input! Check frame size and pages.");
+                    delay(2000);
+                    setfillstyle(SOLID_FILL, DARKGRAY);
+                    bar(200, 110, 600, 130);
+                    continue;
+                }
+
+                // Clear visualization area
+                setfillstyle(SOLID_FILL, DARKGRAY);
+                bar(20, 110, 780, 640);
+
+                // Header for visualization with better spacing
+                settextstyle(8, 0, 1);
+                setcolor(YELLOW);
+                outtextxy(30, 120, "Step");
+                outtextxy(70, 120, "Page");
+                outtextxy(110, 120, "Memory Frames");
+                
+                // Calculate position for status column - better spacing
+                int statusX = 110 + frame * 38 + 15;  // Reduced frame spacing even more
+                if(statusX < 280) statusX = 280;  // Minimum position for status
+                outtextxy(statusX, 120, "Status");
+                
+                // Legend positioning - moved to top right corner, separate from main content
+                settextstyle(8, 0, 1);
+                setcolor(WHITE);
+                outtextxy(580, 120, "Legend:");
+                
+                // Page Fault legend - top right corner
+                setfillstyle(SOLID_FILL, LIGHTRED);
+                bar(650, 120, 665, 130);
+                setcolor(BLACK);
+                rectangle(650, 120, 665, 130);
+                setcolor(WHITE);
+                outtextxy(670, 122, "Fault");
+                
+                // Page Hit legend - top right corner  
+                setfillstyle(SOLID_FILL, LIGHTGREEN);
+                bar(720, 120, 735, 130);
+                setcolor(BLACK);
+                rectangle(720, 120, 735, 130);
+                setcolor(WHITE);
+                outtextxy(740, 122, "Hit");
+                
+                // Draw header separator - moved down more to give space
+                setcolor(CYAN);
+                line(20, 145, 780, 145);
+
+                // Optimal Visualization with animation - optimized for 20 pages
+                vector<int> frames; // current pages in frame
+                int pageFaults = 0;
+                int yPos = 155;  // Starting position - moved down more
+                int rowHeight = 20;  // Further reduced for more space
+
+                for(int i = 0; i < pages.size() && yPos < 605; i++) {  // Reduced max Y more
+                    int page = pages[i];
+                    bool isPageFault = (find(frames.begin(), frames.end(), page) == frames.end());
+
+                    if(isPageFault) {
+                        pageFaults++;
+
+                        // If frame has space, just add page
+                        if (frames.size() < frame) {
+                            frames.push_back(page);
+                        }
+                        else {
+                            // Frame full => replace using optimal
+                            int index_to_replace = -1;
+                            int farthest = i + 1;
+
+                            for (int j = 0; j < frame; j++) {
+                                int k;
+                                for (k = i + 1; k < pages.size(); k++) {
+                                    if (frames[j] == pages[k]) {
+                                        if (k > farthest) {
+                                            farthest = k;
+                                            index_to_replace = j;
+                                        }
+                                        break;
+                                    }
+                                }
+                                // If page is never used again, replace immediately
+                                if (k == pages.size()) {
+                                    index_to_replace = j;
+                                    break;
+                                }
+                            }
+                            frames[index_to_replace] = page;
+                        }
+                    }
+
+                    // Clear current row area for animation
+                    setfillstyle(SOLID_FILL, DARKGRAY);
+                    bar(20, yPos - 2, 780, yPos + 16);
+
+                    // Draw step number (compact)
+                    setcolor(WHITE);
+                    settextstyle(8, 0, 1);
+                    char stepText[10];
+                    sprintf(stepText, "%d", i+1);
+                    outtextxy(32, yPos, stepText);
+
+                    // Draw current page being accessed
+                    char pageText[10];
+                    sprintf(pageText, "%d", page);
+                    setcolor(YELLOW);
+                    outtextxy(72, yPos, pageText);
+
+                    // Draw frames with compact spacing
+                    for(int frameIndex = 0; frameIndex < frame; frameIndex++) {
+                        int xPos = 110 + frameIndex * 38;  // Further reduced spacing
+                        
+                        // Frame background color
+                        int frameColor = isPageFault ? LIGHTRED : LIGHTGREEN;
+                        setfillstyle(SOLID_FILL, frameColor);
+                        bar(xPos, yPos - 1, xPos + 34, yPos + 13);  // Smaller frames
+                        
+                        // Frame border
+                        setcolor(BLACK);
+                        rectangle(xPos, yPos - 1, xPos + 34, yPos + 13);
+
+                        // Frame content - centered text
+                        setcolor(BLACK);
+                        settextstyle(8, 0, 1);
+                        if(frameIndex < frames.size()) {
+                            char frameText[10];
+                            sprintf(frameText, "%d", frames[frameIndex]);
+                            int textX = xPos + 17 - textwidth(frameText)/2;
+                            outtextxy(textX, yPos + 1, frameText);
+                        } else {
+                            outtextxy(xPos + 15, yPos + 1, "-");
+                        }
+                    }
+
+                    // Show page fault/hit status - positioned with guaranteed spacing
+                    int statusPos = max(280, 110 + frame * 38 + 20);  // Guaranteed minimum position
+                    setcolor(isPageFault ? RED : GREEN);
+                    settextstyle(8, 0, 1);
+                    char statusText[8];
+                    strcpy(statusText, isPageFault ? "FAULT" : "HIT");
+                    outtextxy(statusPos, yPos, statusText);
+
+                    // Animation delay - 0.5 seconds
+                    delay(500);
+
+                    yPos += rowHeight;
+                }
+
+                // Show final result - positioned above footer with better spacing
+                setcolor(YELLOW);
+                settextstyle(8, 0, 2);
+                char result[100];
+                sprintf(result, "Total Page Faults: %d / %d pages", pageFaults, (int)pages.size());
+                outtextxy(220, 615, result);  // Moved up and left slightly
+
+                // Wait for user to click back
+                while(true) {
+                    back.hover(LIGHTRED);
+                    if(GetAsyncKeyState(VK_LBUTTON) & (0x8000 != 0)) {
+                        if(back.cursor()) {
+                            menu();
+                            return;
+                        }
+                    }
+                }
+            }
+            else if(back.cursor()) {
+                menu();
+                break;
+            }
+        }
+    }
 }
