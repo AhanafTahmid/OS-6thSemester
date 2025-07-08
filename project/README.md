@@ -1,4 +1,4 @@
-# Fifth Semester Project - Compiler
+# Sixth Semester Project - Compiler
 OS Project - 6th Semester
 # Demo Video
 
