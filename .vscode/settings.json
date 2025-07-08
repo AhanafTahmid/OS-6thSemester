@@ -1,18 +1,30 @@
 {
     "files.associations": {
         "*.ejs": "html",
+        "__split_buffer": "cpp",
         "deque": "cpp",
         "list": "cpp",
         "string": "cpp",
-        "random": "cpp",
-        "__split_buffer": "cpp",
         "vector": "cpp",
-        "__locale": "cpp",
-        "locale": "cpp",
-        "text_encoding": "cpp",
-        "thread": "cpp",
-        "complex": "cpp",
+        "chrono": "cpp",
+        "span": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "map": "cpp",
+        "queue": "cpp",
+        "random": "cpp",
+        "regex": "cpp",
+        "set": "cpp",
+        "stack": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
         "valarray": "cpp",
-        "cmath": "cpp"
+        "ranges": "cpp",
+        "stacktrace": "cpp",
+        "iostream": "cpp"
     }
 }
