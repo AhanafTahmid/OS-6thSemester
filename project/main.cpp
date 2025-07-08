@@ -10,7 +10,7 @@ int main()
     //height and weight of main window
     //width=800 and height=520
 
-    initwindow(800, 720,"Spartan Project");
+    initwindow(800, 920,"Spartan Project");
 
     login();//getting from function.h
 
