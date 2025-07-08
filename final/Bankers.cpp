@@ -1,5 +1,5 @@
-//Bankers Algorithm
-//https://youtu.be/7gMLNiEz3nw
+// Bankers Algorithm
+// https://youtu.be/7gMLNiEz3nw
 // input:
 // 5 3
 // 10 5 7

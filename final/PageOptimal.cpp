@@ -1,13 +1,15 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define endl '\n'
-#define int long long
-
+// PageOptimal Algorithm
+// https://www.youtube.com/watch?v=q2BpMvPhhrY
 // 4 - frame
 // 20 - pages
 // 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
 // Output
 // Total Page Faults = 8
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define int long long
 
 void solve() {
     int frame, pageCount; cin >> frame >> pageCount;

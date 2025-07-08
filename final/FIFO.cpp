@@ -1,14 +1,16 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define endl '\n'
-#define int long long
-
+// FIFO Algorithm
+// https://www.youtube.com/watch?v=8rcUs5RutX0
 // Input
 // 3 - frame
 // 15 - pages
 // 7 0 1 2 0 3 0 4 2 3 0 3 1 2 0
 // Output
 // 12 - page faults
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define int long long
 
 void solve(){
     int frame, pageCount;cin>>frame>>pageCount;
