@@ -21,7 +21,7 @@ void solve(){
     map<int, int>mp, mp2;//how many time appear, how many remain  
     for(int i = 0; i < n; i++){
         int x, y; cin >> x >> y;
-        v.push_back({x, y, i+1}); // arrival, burst, id
+        v.push_back({x, y, i+1}); //arrival, burst, id
         mp[i+1]=y;
     }
 

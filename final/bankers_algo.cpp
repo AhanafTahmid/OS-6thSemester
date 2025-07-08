@@ -41,6 +41,7 @@ void solve(){
             cin>>max_need[i][j];
         }
     }
+
     for(int i=0;i<p;i++){
         for(int j=0;j<r;j++){
             rem_need[i][j] = max_need[i][j] - allocation[i][j];
@@ -58,6 +59,8 @@ void solve(){
     for(int i=0;i<r;i++) available[0][i] = given_resources[i] - sum[i];
 
     int ind = 0;
+    // ok = 1 = no deadlock
+    // ok = 0 = deadlock
     bool ok = 0;
 
     int cnt = 0,inf = 100;

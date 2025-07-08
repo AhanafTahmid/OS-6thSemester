@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "random": "cpp",
+        "__split_buffer": "cpp",
+        "vector": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp",
+        "text_encoding": "cpp",
+        "thread": "cpp",
+        "complex": "cpp",
+        "valarray": "cpp",
+        "cmath": "cpp"
+    }
+}

@@ -25,7 +25,6 @@ void solve(){
     }
 
     sort(v.begin(), v.end());
-
     vector<array<int,3>> a;
     int current_time = 0;
     for (auto p : v) {
@@ -36,7 +35,6 @@ void solve(){
             a.push_back({-1, current_time, arrival});//id,time, arrival
             current_time = arrival;
         }
-
         a.push_back({id, current_time, current_time + burst});
         current_time += burst;
     }
@@ -44,7 +42,6 @@ void solve(){
     for(array<int,3> x: a){
         cout << "P" << x[0] << " " << x[1] << " " << x[2] << endl;
     }
-
     //cout<< v.size() <<endl;
 }
 
